@@ -1,10 +1,11 @@
 {
   "recommendations": [
-    "AureliaEffect.aurelia",
+    "aureliaeffect.aurelia",
     "msjsdiag.debugger-for-chrome",
     "steoates.autoimport",
-    "EditorConfig.EditorConfig",
+    "editorconfig.editorconfig",
     "christian-kohler.path-intellisense",
-    "behzad88.Aurelia"
+    "behzad88.aurelia",
+    "abusaidm.html-snippets"
   ]
 }
