@@ -1,23 +1,65 @@
-import { Todo } from "./todo";
+import { Customer } from "./customer";
+
+const CUSTOMERS = "CUSTOMERS";
 
 export class App {
   constructor() {
-    this.title = "Добавление сотрудника";
+    this.heading = "Customer Manager";
 
-    this.todoList = [];
-    this.todoList.push(new Todo("Clean my room"));
-    this.todoList.push(new Todo("Walk the dog"));
-    this.todoList.push(new Todo("Take out the trash"));
-
-    this.newItem = "";
+    this.customers = this.getCustomersFromStorage();
+    this.customerName = "";
+    this.customerEmail = "";
+    this.customerPhone = "";
   }
 
-  addTodo() {
-    this.todoList.push(new Todo(this.newItem));
-    this.newItem = "";
+  addCustomer() {
+    if (this.customerName && this.customerPhone && this.customerPhone) {
+      this.customers.push(
+        new Customer(this.customerName, this.customerEmail, this.customerPhone)
+      );
+
+      this.storeCustomer(
+        this.customerName,
+        this.customerEmail,
+        this.customerPhone
+      );
+
+      this.customerName = "";
+      this.customerEmail = "";
+      this.customerPhone = "";
+    }
   }
 
-  removeTodo(todo) {
-    this.todoList.splice(this.todoList.indexOf(todo), 1);
+  storeCustomer(name, email, phone) {
+    let customers;
+    !localStorage.getItem(CUSTOMERS)
+      ? (customers = [])
+      : (customers = JSON.parse(localStorage.getItem(CUSTOMERS)));
+
+    customers.push({ name, email, phone });
+    localStorage.setItem(CUSTOMERS, JSON.stringify(customers));
+  }
+
+  getCustomersFromStorage() {
+    let customers;
+    !localStorage.getItem(CUSTOMERS)
+      ? (customers = [])
+      : (customers = JSON.parse(localStorage.getItem(CUSTOMERS)));
+
+    return customers;
+  }
+
+  removeCustomer(customer) {
+    let index = this.customers.indexOf(customer);
+    if (index !== -1) {
+      this.customers.splice(index, 1);
+    }
+    this.removeCustomerFromStorage(index);
+  }
+
+  removeCustomerFromStorage(index) {
+    let customers = JSON.parse(localStorage.getItem(CUSTOMERS));
+    customers.splice(index, 1);
+    localStorage.setItem(CUSTOMERS, JSON.stringify(customers));
   }
 }
