@@ -1,14 +1,123 @@
 <template>
-  <h1>${message}</h1>
-  <ul>
-    <li repeat.for="todo of todoList">
-      <input type="checkbox" checked.bind="todo.done" />
-      <span css="text-decoration: ${todo.done ? 'line-through' : 'none'}">
-        ${todo.description}
-      </span>
-      <button click.delegate="removeTodo(todo)">Remove</button>
-    </li>
-  </ul>
-  <input type="text" value.bind="newItem" />
-  <button click.delegate="addTodo()">Add</button>
+  <require from="./app.css"></require>
+  <main>
+    <ul>
+      <li repeat.for="todo of todoList">
+        <input type="checkbox" checked.bind="todo.done" />
+        <span css="text-decoration: ${todo.done ? 'line-through' : 'none'}">
+          ${todo.description}
+        </span>
+        <button click.delegate="removeTodo(todo)">Remove</button>
+      </li>
+    </ul>
+    <input type="text" value.bind="newItem" />
+    <button click.delegate="addTodo()">Add</button>
+
+    <form>
+      <div class="title">${title}</div>
+      <div class="field">
+        <label class="requiredLabel" for="firstName"> Введите Ваше имя: </label>
+        <input
+          class="inputText"
+          type="text"
+          name="firstName"
+          placeholder="Имя"
+          autofocus=""
+          required
+          pattern="^[a-zA-Z-А-Яа-яЁё]+$"
+        />
+      </div>
+      <div class="field">
+        <label class="requiredLabel" for="secondName">
+          Введите Вашу фамилию:
+        </label>
+        <input
+          class="inputText"
+          type="text"
+          name="secondName"
+          placeholder="Фамилия"
+          required
+          pattern="^[a-zA-Z-А-Яа-яЁё]+$"
+        />
+      </div>
+      <div class="field">
+        <label class="requiredLabel" for="patronymic">
+          Введите Ваше отчество:
+        </label>
+        <input
+          class="inputText"
+          type="text"
+          name="patronymic"
+          placeholder="Отчество"
+          required
+          pattern="^[a-zA-Z-А-Яа-яЁё]+$"
+        />
+      </div>
+      <div class="field">
+        <label class="requiredLabel" for="post"> Должность: </label>
+        <input
+          class="inputText"
+          type="text"
+          name="post"
+          placeholder="Должность"
+          required
+          pattern="^[a-zA-Z-А-Яа-яЁё]+$"
+        />
+      </div>
+      <div class="field">
+        <label class="requiredLabel" for="date"> Дата рождения: </label>
+        <input class="inputText" type="date" name="date" required />
+      </div>
+      <div class="field">
+        <label class="requiredLabel" for="salary"> Сумма оклада (USD): </label>
+        <div class="positionSalary">
+          <input
+            type="text"
+            class="inputTextSalary"
+            name="salary"
+            placeholder="568.67"
+            required
+            pattern="\d+(\.\d{1,})?"
+          />
+        </div>
+      </div>
+      <div class="field">
+        <label class="requiredLabel" for="email"> Введите Ваш e-mail: </label>
+        <input
+          class="inputText"
+          type="email"
+          name="email"
+          placeholder="example@gmail.com"
+          required
+          pattern="\S+@[a-z]+.[a-z]+"
+        />
+      </div>
+      <div class="field">
+        <label class="requiredLabel" for="phone"> Номер телефона: </label>
+        <input
+          class="inputText"
+          type="text"
+          name="phone"
+          placeholder="+375336947626"
+          required
+          pattern="\+\d{12}"
+        />
+      </div>
+      <div class="field">
+        <label class="requiredLabel" for="house"> Адрес: </label>
+        <input
+          class="inputText"
+          type="text"
+          name="house"
+          placeholder="Страна, Город, Улица, Дом, Квартира"
+          required
+          pattern="[A-Za-zА-Яа-яЁё]{3,12},\s[A-Za-zА-Яа-яЁё]{3,12},\s[A-Za-zА-Яа-яЁё]{3,12},\s\d+(,\s\d+)?"
+        />
+      </div>
+      <div class="container">
+        <button type="submit" class="add">Добавить</button>
+        <input id="deleteButton" class="delete" value="Очистить" type="reset" />
+      </div>
+    </form>
+  </main>
 </template>

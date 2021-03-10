@@ -2,7 +2,8 @@ import { Todo } from "./todo";
 
 export class App {
   constructor() {
-    this.message = "Hello World!";
+    this.title = "Добавление сотрудника";
+
     this.todoList = [];
     this.todoList.push(new Todo("Clean my room"));
     this.todoList.push(new Todo("Walk the dog"));

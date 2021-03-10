@@ -1,0 +1,136 @@
+@font-face {
+  font-family: MachineC;
+  src: url(../static/fonts/MachineC.otf);
+}
+
+@font-face {
+  font-family: PTSerifBold;
+  src: url(../static/fonts//PTSerifBold.ttf);
+}
+
+@font-face {
+  font-family: Arial;
+  src: url(../static/fonts/Arial.ttf);
+}
+
+@mixin setPaddings($newPaddingTop, $newPaddingBottom) {
+  padding-top: $newPaddingTop;
+  padding-bottom: $newPaddingBottom;
+}
+
+@mixin setMargins($newMarginTop, $newMarginBottom) {
+  margin-top: $newMarginTop;
+  margin-bottom: $newMarginBottom;
+}
+
+html {
+  display: block;
+}
+
+body {
+  display: block;
+  margin: 0 auto;
+  background: repeating-radial-gradient(#dea368, #d6a089, #d09ea6);
+  width: 100%;
+  height: 100%;
+  display: table;
+  top: 0;
+  left: 0;
+
+  main {
+    @extend body;
+    padding: 0rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+
+    form {
+      margin: 0 auto;
+      @include setMargins(40px, 40px);
+      width: 500px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+      background-color: #efefef;
+
+      .title {
+        @include setPaddings(10px, 20px);
+        width: 100%;
+        text-align: center;
+        font-family: MachineC;
+        font-size: 30px;
+        color: rgba(0, 0, 0, 0.9);
+      }
+
+      .field {
+        width: 450px;
+        margin: 0 auto;
+        margin-bottom: 10px;
+
+        label {
+          cursor: pointer;
+          font-family: PTSerifBold;
+          font-size: 15px;
+          color: #373636;
+        }
+
+        input {
+          font-family: PTSerifBold;
+          font-size: 15px;
+          color: rgba(0, 0, 0, 0.5);
+          background-color: #fff;
+          border: 2px solid #cccccc;
+          padding-left: 5px;
+          width: 400px;
+          height: 40px;
+        }
+      }
+
+      .container {
+        margin: 0 auto;
+        width: 410px;
+        height: 70px;
+
+        button {
+          outline: 0 !important;
+          border: 3px solid #efefef;
+          margin: 0 auto;
+          width: 200px;
+          height: 50px;
+          font-family: PTSerifBold;
+          font-size: 20px;
+          color: #fff;
+          border-radius: 10px;
+
+          &:disabled {
+            background-color: rgb(95, 88, 88);
+            cursor: default;
+          }
+          &:disabled:hover {
+            background-color: rgb(95, 88, 88);
+            cursor: default;
+          }
+          &:hover {
+            cursor: pointer;
+            background-color: #1ccf4a;
+          }
+        }
+
+        .add {
+          background-color: #12ad5e;
+          @extend button;
+        }
+
+        .delete {
+          background-color: #d00b0b;
+          @extend button;
+
+          &:hover {
+            cursor: pointer;
+            background-color: #da4641;
+          }
+        }
+      }
+    }
+  }
+}
