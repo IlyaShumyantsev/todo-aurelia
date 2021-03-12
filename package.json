@@ -10,6 +10,8 @@
   "dependencies": {
     "aurelia-animator-css": "^1.0.4",
     "aurelia-bootstrapper": "^2.3.3",
+    "highcharts": "^9.0.1",
+    "jquery": "^3.6.0",
     "sass-loader": "^11.0.1"
   },
   "devDependencies": {

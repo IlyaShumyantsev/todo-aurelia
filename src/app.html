@@ -11,6 +11,12 @@
         class="u-full-width"
       />
       <input
+        type="number"
+        value.bind="customerAge"
+        placeholder="Age (22)"
+        class="u-full-width"
+      />
+      <input
         type="email"
         value.bind="customerEmail"
         placeholder="E-mail address (example@gmail.com)"
@@ -32,11 +38,13 @@
     <table class="u-full-width">
       <tr>
         <th>Name</th>
+        <th>Age</th>
         <th>Email</th>
         <th>Phone</th>
       </tr>
       <tr repeat.for="customer of customers">
         <td>${customer.name}</td>
+        <td>${customer.age}</td>
         <td>${customer.email}</td>
         <td>${customer.phone}</td>
         <td>
@@ -45,4 +53,5 @@
       </tr>
     </table>
   </div>
+  <div ref="container"></div>
 </template>
