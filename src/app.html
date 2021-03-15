@@ -2,7 +2,6 @@
   <!-- <require from="./app.css"></require> -->
   <div class="container">
     <h1>${heading}</h1>
-
     <form submit.trigger="addCustomer()">
       <input
         type="text"
@@ -52,6 +51,9 @@
         </td>
       </tr>
     </table>
+    <button click.trigger="diagramHandler()" class="u-full-width">
+      Show/Reload diagram
+    </button>
   </div>
-  <div ref="container"></div>
+  <div ref="diagram"></div>
 </template>

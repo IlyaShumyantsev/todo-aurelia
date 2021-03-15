@@ -1,28 +1,84 @@
 // import $ from "jquery";
 import Highcharts from "highcharts";
 import { Customer } from "./customer";
+import { getUsers } from "./api";
 
 const CUSTOMERS = "CUSTOMERS";
 
 export class App {
   constructor() {
     this.heading = "Customer Manager";
-
-    this.customers = this.getCustomersFromStorage();
     this.customerName = "";
     this.customerAge = "";
     this.customerEmail = "";
     this.customerPhone = "";
+    this.customers = [];
+    this.loadData().then((data) => (this.customers = data));
+  }
 
-    console.log(this.customers);
-    this.calculatePercentFromYear(this.customers);
+  diagramHandler() {
+    Highcharts.chart(this.diagram, {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: "pie",
+      },
+      title: {
+        text: "Customers age",
+      },
+      tooltip: {
+        pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+      },
+      accessibility: {
+        point: {
+          valueSuffix: "%",
+        },
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: "pointer",
+          dataLabels: {
+            enabled: true,
+            format: "<b>{point.name}</b>: {point.percentage:.1f} %",
+          },
+        },
+      },
+      series: [
+        {
+          name: "Percentage of employees with this age",
+          colorByPoint: true,
+          data: this.calculatePercentFromYear(this.customers),
+        },
+      ],
+    });
+  }
+
+  async loadData() {
+    if (this.getCustomersFromStorage().length === 0) {
+      await getUsers().then((users) => {
+        this.customers = users;
+        this.customers.forEach((item) => {
+          this.storeCustomer(item.name, item.age, item.email, item.phone);
+        });
+      });
+    }
+    return this.getCustomersFromStorage();
   }
 
   calculatePercentFromYear(o) {
-    let ages = new Map();
+    let ages = {},
+      result = [];
     for (let key in o) {
-      console.log(o[key].age);
+      ages.hasOwnProperty(o[key].age)
+        ? (ages[o[key].age] += 1)
+        : (ages[o[key].age] = 1);
     }
+    for (let key in ages) {
+      result.push({ name: `Age: ${key}`, y: (100 * ages[key]) / o.length });
+    }
+    return result;
   }
 
   addCustomer() {
@@ -55,13 +111,13 @@ export class App {
     }
   }
 
-  storeCustomer(name, age, email, phone, y) {
+  storeCustomer(name, age, email, phone) {
     let customers;
     !localStorage.getItem(CUSTOMERS)
       ? (customers = [])
       : (customers = JSON.parse(localStorage.getItem(CUSTOMERS)));
 
-    customers.push({ name, age, y: 22, email, phone });
+    customers.push({ name, age, email, phone });
     localStorage.setItem(CUSTOMERS, JSON.stringify(customers));
   }
 
@@ -86,81 +142,5 @@ export class App {
     let customers = JSON.parse(localStorage.getItem(CUSTOMERS));
     customers.splice(index, 1);
     localStorage.setItem(CUSTOMERS, JSON.stringify(customers));
-  }
-
-  attached() {
-    Highcharts.chart(this.container, {
-      chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: "pie",
-      },
-      title: {
-        text: "Customers age",
-      },
-      tooltip: {
-        pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
-      },
-      accessibility: {
-        point: {
-          valueSuffix: "%",
-        },
-      },
-      plotOptions: {
-        pie: {
-          allowPointSelect: true,
-          cursor: "pointer",
-          dataLabels: {
-            enabled: true,
-            format: "<b>{point.name}</b>: {point.percentage:.1f} %",
-          },
-        },
-      },
-      series: [
-        {
-          name: "Brands",
-          colorByPoint: true,
-          data: [
-            {
-              name: "Chrome",
-              y: 61.41,
-            },
-            {
-              name: "Internet Explorer",
-              y: 11.84,
-            },
-            {
-              name: "Firefox",
-              y: 10.85,
-            },
-            {
-              name: "Edge",
-              y: 4.67,
-            },
-            {
-              name: "Safari",
-              y: 4.18,
-            },
-            {
-              name: "Sogou Explorer",
-              y: 1.64,
-            },
-            {
-              name: "Opera",
-              y: 1.6,
-            },
-            {
-              name: "QQ",
-              y: 1.2,
-            },
-            {
-              name: "Other",
-              y: 2.61,
-            },
-          ],
-        },
-      ],
-    });
   }
 }
